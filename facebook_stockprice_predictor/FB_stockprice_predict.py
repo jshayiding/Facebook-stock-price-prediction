@@ -1,7 +1,7 @@
 """
 Description:
 
-This project dedicated to implement web based application in python development
+This project is devoted to implement web based application in python development
 environment, and whole environement has been set up with Flask.
 In this project I programmatically collect last 365 days of facebook stock price data
 using python modules bs4::BeautifulSoup and request and write to temporary csv file.
@@ -9,14 +9,15 @@ based on the data collected, opening price for requested time period is predicte
 by using linear regression model by using sklearn::linear_model python module. 
 Whenever the stock prediction for facebook stock completed, temporary historical data
 that collected from web API will be deleted.
+"""
+
+"""
+Requirement:  Python version used 3.6
+"""
 
 
-Python version used 3.6
-
-Modules needed:
-
+"""
 Used Python modules:
-
 
 requests
 bs4::BeautifulSoup

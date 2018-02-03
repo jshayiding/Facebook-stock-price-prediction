@@ -25,13 +25,11 @@ def add_header(response):
 @app.route("/")
 def first_page():
     """
-    original_end = 75
-    forecast_start = 120
     stock = "Facebook"
     return render_template("plot.html", original = original_end, forecast = forecast_start, stock_tinker = stock)
     """
-    tmp = Path("static/prophet.png")
-    tmp_csv = Path("static/FB_stockData.csv")
+    tmp = Path("stat/prophet.png")
+    tmp_csv = Path("stat/FB_stockData.csv")
     if tmp.is_file():
         os.remove(tmp)
     if tmp_csv.is_file():

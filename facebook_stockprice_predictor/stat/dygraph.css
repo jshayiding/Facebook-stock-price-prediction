@@ -1,6 +1,10 @@
 /**
  * Default styles for the dygraphs charting library.
  */
+ 
+ /**
+ * this css template is adopted from dygraph documentation
+ */
 
 .dygraph-legend {
   position: absolute;

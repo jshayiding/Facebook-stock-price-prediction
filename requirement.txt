@@ -1,0 +1,14 @@
+numpy==1.11.2
+python-version==3.6.4
+scikit-learn==0.18.1
+scipy==0.18.1
+requests==2.18.4
+BeautifulSoup==4.0.0
+os==16.0.1
+sys==27.0.1
+csv==14.0.1
+datetime==8.0.1
+itertools==9.7.1
+pandas==0.22.0
+fbprophet==0.2.1
+pathlib==11.1.1

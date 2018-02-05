@@ -1,7 +1,7 @@
 """
 Description:
 
-This project is devoted to implement web based application in python development
+This project dedicated to implement web based application in python development
 environment, and whole environement has been set up with Flask.
 In this project I programmatically collect last 365 days of facebook stock price data
 using python modules bs4::BeautifulSoup and request and write to temporary csv file.
@@ -9,19 +9,19 @@ based on the data collected, opening price for requested time period is predicte
 by using linear regression model by using sklearn::linear_model python module. 
 Whenever the stock prediction for facebook stock completed, temporary historical data
 that collected from web API will be deleted.
-"""
-
-"""
-Requirement:  Python version used 3.6
-"""
 
 
-"""
+Python version used 3.6
+
+Modules needed:
+
 Used Python modules:
+
 
 requests
 bs4::BeautifulSoup
-sklearn::linear_model
+sklearn.linear_model::LogisticRegression
+sklearn.linear_model::SGDClassifier
 Pandas
 Numpy
 scikit-learn
@@ -40,12 +40,17 @@ import numpy as np
 import time
 import csv
 import datetime
-from sklearn import linear_model
+from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import SGDClassifier
 from bs4 import BeautifulSoup
+from sklearn.cross_validation import KFold
+from sklearn.metrics import accuracy_score
 
 File_Name='FB_historical_stock_data.csv'
 
 # retrive Facebook historical data for stock price prediction
+
+
 def get_historical_data(stock_data):
     url='https://finance.yahoo.com/quote/FB/history?period1=1486076400&period2=1517612400&interval=1d&filter=history&frequency=1d'
     html_doc=requests.get(url, stream=True)
@@ -69,21 +74,28 @@ def stock_prediction():
             if str!="-":
                 data_pool.append(float(line.split(',')[1]))
     data_pool=np.array(data_pool)
+        
+    numFolds = 10
+    kf = KFold(len(data_pool), numFolds, shuffle=True)
+    X=data_pool["data"]
+    Y=data_pool["target"]
+    RegMod=[LogisiticRegression, SGDClassifier]
+    params = [{}, {"loss": "log", 'n_iter':1000}]
     
-    def create_dataPools(data_pool):
-        data_X=[data_pool[n+1] for n in range(len(data_pool)-2)]
-        res=np.array(data_X), data_pool[2:]
-
-    train_X=create_dataPools(data_pool)
-    
-    def predict_stock_price(dates, prices, train_X):
-        lin_model=linear_model.LinearRegression()
-        dates=np.shape(dates, (len(dates),1))
-        prices=np.shape(prices, (len(prices),1))
-        lin_model.fit(dates, prices)
-        predicted_price=lin_model.predict(train_X)
-        res= predicted_price[0][0],lin_model.coef_[0][0] ,lin_model.intercept_[0]
-        return res
+    # use built it function zip() to return iterator ot tuples based on iterable object (list of parameter and diff Regression model)
+    for params, RegMod in zip(params, RegMod):
+        total=0
+        for tr_idx, tst_idx in kf:
+            train_X=X[tr_idx,:]; train_Y=Y[tr_idx]
+            test_X=X[tst_idx,:];test_Y=Y[tst_idx,:]
+        
+            lin_model=linear_model.LogisticRegression()
+            lin_model.fit(train_X, train_Y)
+            predicted_price=lin_model.predict(test_X)
+            total += accuracy_score(test_Y, predicted_price)
+        accuracy = total / numFolds
+        print predicted_price[0][0],lin_model.coef_[0][0] ,lin_model.intercept_[0]
+        print "Accuracy score of {0}: {1}".format(RegMod.__name__, accuracy)
     # Check if we got the historical data
     if not get_historical_data(stock_data):
         print "input is missing !"

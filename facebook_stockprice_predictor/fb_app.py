@@ -45,8 +45,8 @@ def add_header(response):
     return response
     
 @app.route("/")
-# render fist page
-def first_page():
+# render Home_Page
+def Home_Page():
     """
     stock = "Facebook"
     return render_template("plot.html", original = original_end, forecast = forecast_start, stock_tinker = stock)

@@ -20,8 +20,7 @@ Used Python modules:
 
 requests
 bs4::BeautifulSoup
-sklearn.linear_model::LogisticRegression
-sklearn.linear_model::SGDClassifier
+sklearn::linear_model
 Pandas
 Numpy
 scikit-learn
@@ -94,13 +93,14 @@ def stock_prediction():
             predicted_price=lin_model.predict(test_X)
             total += accuracy_score(test_Y, predicted_price)
         accuracy = total / numFolds
-        print predicted_price[0][0],lin_model.coef_[0][0] ,lin_model.intercept_[0]
         print "Accuracy score of {0}: {1}".format(RegMod.__name__, accuracy)
-    # Check if we got the historical data
-    if not get_historical_data(stock_data):
-        print "input is missing !"
-        sys.exit()
-    #print out stock prediction result
-    print (stock_prediction())
-    # whenever stock prediction is done, temp stock data can be deleted.
-    os.remove(File_Name)
+    return predicted_price[0][0],lin_model.coef_[0][0] ,lin_model.intercept_[0]
+
+# Check if we got the historical data
+if not get_historical_data(stock_data):
+    print "input is missing !"
+    sys.exit()
+#print out stock prediction result
+print (stock_prediction())
+# whenever stock prediction is done, temp stock data can be deleted.
+os.remove(File_Name)

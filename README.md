@@ -1,5 +1,6 @@
-# FB_stockpprice_prediction
-Facebook stock price prediction in Python
+## flask app for facebook stockpprice prediction
+ Author: Jurat Shayiding
+ Project created: 2017-11-20
 
 This project dedicated to implement web based application in python environment, and whole environement has been set up with Flask.
 In this project I programmatically collect last 365 days of facebook stock price data using python modules bs4::BeautifulSoup and 

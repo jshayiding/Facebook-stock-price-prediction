@@ -1,5 +1,7 @@
 ## flask app for facebook stockpprice prediction
+ 
  Author: Jurat Shayiding
+ 
  Project created: 2017-11-20
 
 This project dedicated to implement web based application in python environment, and whole environement has been set up with Flask.
